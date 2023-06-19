@@ -3,7 +3,7 @@
 ## Proposition de fonctionnement
 
 Au contraire des précédents éditions guidées par des présentations théoriques, on 
-pourrait cette fois-ci conduite la progression par de la découverte code, commentée oralement, avec des liens pour compléments d'information,
+pourrait cette fois-ci conduire la progression par de la découverte code, commentée oralement, avec des liens pour compléments d'information,
 et inviter les participants à réparer les tests en corrigeant le code existant et/ou en implémentant le code nécessaire.
 
 Après avoir passé en revue avec le groupe un helloworld présentant le fonctionnement général du langage (Difficulté ici : où s'arrête-t-on ?)
