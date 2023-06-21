@@ -1,0 +1,269 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+
+	<link href="css/styles.css" rel="stylesheet">
+
+</head>
+
+<style>
+</style>
+<body>
+
+<h1>badges-api</h1>
+
+<br>
+
+<br>
+
+<div id="get-users">
+	<label id="label-users" for="users" class="button-21" role="button">GetUsers</label>
+	&nbsp;
+	<div class="box">
+	  <select id="users" name="users" role="button" >
+	  </select>
+	</div>
+</div>
+
+<br>
+<br>
+<br>
+
+DEBUG: user ID selected: <span id="current-user"></span><br>
+<br>
+<br>
+
+<hr>
+
+<br>
+<label id="bt-getuserbadges" class="button-21" role="button"> GetUserBadges </label><br>
+<br>
+
+<div id="ct-badges">
+
+<!-- <img class="rounded-corners" src="https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vue.js&logoColor=4FC08D"> &nbsp;
+
+<img class="rounded-corners" src="https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white"> -->
+
+</div>
+
+<br>
+<br>
+
+<hr>
+
+<h2> Opérations sur badges de l'utilisateur</h2>
+<br>
+Badge Name : <input id="input-badge-name" value="docker"></input><br>
+Badge URL : <input id="input-badge-url" size="100" value="https://img.shields.io/badge/Go-AD00D8?style=for-the-badge&logo=go&logoColor=white"></input><br>
+<br>
+<br>
+<label id="bt-adduserbadge" class="button-21" role="button"> AddUserBadge </label> 
+&nbsp;
+<label id="bt-deleteuserbadge" class="button-21" role="button"> DeleteUserBadge </label>
+&nbsp;
+<label id="bt-updateuserbadge" class="button-21" role="button"> UpdateUserBadge </label> <br>
+
+<br>
+<br>
+
+<script type="text/javascript">
+
+// display fields (spans / divs)
+let currentUserElt = document.querySelector('#current-user');
+
+// buttons
+let buttonGetUsers = document.querySelector('#label-users');
+
+// inputs
+let inputBadgeName = document.querySelector("#input-badge-name");
+let inputBadgeUrl = document.querySelector("#input-badge-url");
+
+let buttonAddUserBadge = document.querySelector("#bt-adduserbadge");
+let buttonDeleteUserBadge = document.querySelector("#bt-deleteuserbadge");
+let buttonUpdateUserBadge = document.querySelector("#bt-updateuserbadge");
+
+
+// Event handlers
+
+buttonGetUsers.addEventListener("click", function() {
+
+	fetch("/api/users")
+  		.then( (resp) => { return resp.json(); })
+  		.then( (data) => {
+			UpdateUsers(data.users);
+  		})
+  		.catch( (err) => {
+    		console.log("error", err);
+    	})
+});
+
+let listUsers = document.querySelector('select#users');
+listUsers.addEventListener("click", function(evt) {
+	if ( listUsers.selectedOptions.length == 0) { return; }
+	
+	currentUserElt.innerText = listUsers.selectedOptions[0].innerText;
+});
+
+buttonGetUserBadges = document.querySelector('#bt-getuserbadges');
+buttonGetUserBadges.addEventListener("click", function() {
+
+	if (currentUserElt.innerText == "") {
+		alert("Pas d'utilisateurs sélectionné \n\n => Cliquer sur la liste déroulante à droite de GetUsers ");
+		return;
+	}
+
+	var userID = currentUserElt.innerText;
+
+	fetch("/api/badges/"+userID)
+  		.then( (resp) => { return resp.json(); })
+  		.then( (data) => {
+			console.log("data:", data);
+
+			var badges = data;
+			
+			UpdateBadges(data.badges);
+  		})
+  		.catch( (err) => {
+    		console.log("error", err);
+    	})
+});
+
+buttonAddUserBadge.addEventListener("click", function() {
+	console.log("buttonAddUserBadge");
+
+	if (listUsers.selectedOptions[0] == undefined) {
+		console.log("not user selected yet");
+		return;
+	}
+
+	userID = listUsers.selectedOptions[0].innerText;
+
+	badgeName = "docker";
+	//badgeURL = "https://img.shields.io/badge/Steam-000000?style=for-the-badge&logo=steam&logoColor=white";
+	badgeURL = "https://img.shields.io/badge/Go-AD00D8?style=for-the-badge&logo=go&logoColor=white";
+
+	var badge = {
+		'name' : badgeName,
+		'url'  : badgeURL,
+	};
+
+	fetch('/api/badge/'+userID, {
+  		method: 'POST',
+	  	headers: {
+	    	//'Accept': 'application/json, text/plain, */*',
+	    	'Content-Type': 'application/json'
+	  	},
+	  	body: JSON.stringify(badge)
+
+	}).then(res => res.json())
+	  .then(res => console.log(res))
+	  .catch( err => console.log("err:", err));
+});
+
+buttonDeleteUserBadge.addEventListener("click", function() {
+	console.log("buttonDeleteUserBadge");
+
+	var userID = 123;
+
+	badgeName = "steam";
+
+	var badge = {
+		'name' : badgeName,
+	};
+
+	fetch('/api/badge/'+userID, {
+  		method: 'DELETE',
+	  	headers: {
+	    	//'Accept': 'application/json, text/plain, */*',
+	    	'Content-Type': 'application/json'
+	  	},
+	  	body: JSON.stringify(badge)
+
+	}).then(res => res.json())
+	  .then(res => console.log(res))
+	  .catch( err => console.log("err:", err));
+
+});
+
+buttonUpdateUserBadge.addEventListener("click", function() {
+	console.log("buttonUpdateUserBadge");
+
+	var userID = 123;
+
+	badgeName = "steam";
+	badgeURL = "https://img.shields.io/badge/Steam-000000?style=for-the-badge&logo=steam&logoColor=white";
+
+	var badge = {
+		'name' : badgeName,
+		'url'  : badgeURL
+	};
+
+	fetch('/api/badge/'+userID, {
+  		method: 'PATCH',
+	  	headers: {
+	    	//'Accept': 'application/json, text/plain, */*',
+	    	'Content-Type': 'application/json'
+	  	},
+	  	body: JSON.stringify(badge)
+
+	}).then(res => res.json())
+	  .then(res => console.log(res))
+	  .catch( err => console.log("err:", err));
+
+});
+
+
+// API GET/POST resources
+
+function UpdateUsers(users) {
+	const select = document.querySelector('#users');
+
+	for (const x of users.keys()) {
+  		//let newOption = new Option(users[x],'Option Value');
+  		let newOption = new Option(users[x].ID,'Option Value');
+  		//newOption.addEventListener('click', function() { console.log("ee");});
+		select.add(newOption,undefined);
+	}
+}
+
+function UpdateBadges(badges) {
+	const badgesCt = document.querySelector('#ct-badges');
+
+	badgesCt.innerHTML = "";
+
+	for (const b of badges) {
+		//console.log(b.url);
+		badgesCt.innerHTML += '<img class="rounded-corners" src="' + b.url + '"> &nbsp;';
+	}
+}
+
+function AddUserBadge() {
+	console.log("inputBadgeName:", inputBadgeName.value);
+	console.log("inputBadgeUrl:",  inputBadgeUrl.value);
+	
+}
+
+//UpdateUsers();
+
+/* 
+
+var badges = [ { 'name' : 'name', 'url' : "https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vue.js&logoColor=4FC08D" }, 
+               { 'name' : 'name', 'url' : "https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white", } ];
+
+UpdateBadges(badges);
+*/
+
+addEventListener("DOMContentLoaded", (evt) => {
+	fetch("/api/users")
+  		.then( (resp) => { return resp.json(); })
+  		.then( (data) => {
+			UpdateUsers(data.users);
+  		})
+  		.catch( (err) => {
+    		console.log("error", err);
+    	})
+});
+
+</script>
