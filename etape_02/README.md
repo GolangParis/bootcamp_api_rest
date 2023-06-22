@@ -10,11 +10,11 @@ type StorageInMemory map[uint][]Badge
 
 * Equiper StorageInMemory de méthodes pour gérer les badges :
 
-```
+```go
 Connect() error
 
-CreateUser(User) (uint, error)
-	
+CreateUser(User) (User, error)
+
 GetUsers() ([]User, error)
 
 GetUserBadges(userID uint) ([]Badge, error)
