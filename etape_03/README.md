@@ -1,9 +1,33 @@
 
 ## Etape 03 - 
 
-* En se basant sur la route /get/users ajouter les routes XXXX TODO
+* Mise en place de l'utilisation de gin
 
-* Route GET : décoder les params de l'URL
+import "github.com/gin-gonic/gin"
 
-* Route POST : décoder le corps de la requête
+* Création d'un routeur Gin basique
+
+```
+ginRouter := gin.Default()
+```
+
+* En se basant sur la route existante `/get/users` ajouter ces routes :
+
+```
+Méthode  Route                Fonction réponse
+
+GET      /api/badges/:userid  GetUserBadges
+POST     /api/badge/:userid   PostBadge
+DELETE   /api/badge/:userid   DeleteBadge
+PATCH    /api/badge/:userid   UpdateBadge
+```
+
+* PostBadge
+
+- décoder le corps de la requête
+
+* DeleteBadge et UpdateBadge
+
+- Décoder le param user ID de l'URL
+- Convertir le userID vers le type int avec strconv.ParseInt
 
