@@ -8,13 +8,13 @@ installez Visual Code.
 
 Travailler dans ce répertoire
 
-```
+```sh
 cd badges/etape_00
 ```
 
 Initialisez le fichier de module
 
-```
+```sh
 go mod init {nom_du_module}
 ```
 
@@ -25,8 +25,8 @@ nom_du_module = badges (ou autre chose si vous préferez)
 
 Avec Visual Code ou votre IDE favori :
 
-```
-# avec Visual Code 
+```sh
+# avec Visual Code
 code main.go
 ```
 
@@ -42,7 +42,19 @@ Nom de la fonction : main
 
 Son corps devra contenir simplement :
 
-```
+```golang
 fmt.Println("I can haz Badges ?")
 ```
 
+Construire le binaire
+
+```sh
+go build
+```
+
+lancer le binaire produit
+Le nom du binaire est celui du package
+
+```sh
+./badges
+```
