@@ -8,5 +8,6 @@
 
 * Ajouter un fichier utils.go dans lequel sera ajoutée :
 * Une fonction AddToSet prenant en entrée une slice de Badges, et un nouveau Badge,
-  et n'ajoutera ce badge à la slice seulement si elle ne contient pas déja
+  et n'ajoutera ce badge à la slice seulement si elle ne contient pas déja.
+  Cette fonction retournera la slice mise à jour.
 
