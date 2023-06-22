@@ -3,5 +3,10 @@
 
 * Mettre en place une interface Storage listant les méthodes CRUD de l'API 
 
-* Et injecter l'implémentation StorageInMemory dans Storage
+* Déclarer une variable globale de type Storage 
+
+* Affecter à cette variable une instance de StorageInMemory
+
+* Mettre à jour le code api pour utiliser la nouvele variable globale de type Storage
+
 
