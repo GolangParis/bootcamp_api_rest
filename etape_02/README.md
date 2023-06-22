@@ -11,7 +11,7 @@ type StorageInMemory map[uint][]Badge
 * Equiper StorageInMemory de méthodes pour gérer les badges :
 
 ```
-Connect()
+Connect() error
 
 CreateUser(User) (uint, error)
 	
