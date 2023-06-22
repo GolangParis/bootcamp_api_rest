@@ -13,13 +13,13 @@ type StorageInMemory map[uint][]Badge
 ```
 Connect()
 
-CreateUser(types.User) (uint, error)
+CreateUser(User) (uint, error)
 	
-GetUsers() ([]types.User, error)
+GetUsers() ([]User, error)
 
-GetUserBadges(userID uint) ([]types.Badge, error)
-AddUserBadge(userID uint, b types.Badge) (uint, error)
-UpdateUserBadge(userID uint, b types.Badge) error
+GetUserBadges(userID uint) ([]Badge, error)
+AddUserBadge(userID uint, b Badge) (uint, error)
+UpdateUserBadge(userID uint, b Badge) error
 DeleteUserBadge(userID uint, badgeName string) error
 ```
 
