@@ -1,14 +1,20 @@
 
-## Etape 02 - 
+## Etape 2 - 
 
-* Déclarer une map associant à un `uint` une slice contenant 0 ou plusieurs Badges
+## Objectif
 
-* Définir un type StorageInMemory basé sur ce type map
+A la fin de cette étape vous devriez aboutir à
 
+## 20. Déclarer une map associant à un `uint` une slice contenant 0 ou plusieurs Badges
+
+## 21. Définir un type StorageInMemory basé sur ce type map
+
+```go
 type StorageInMemory map[uint][]Badge
+```
 
 
-* Equiper StorageInMemory de méthodes pour gérer les badges :
+## 22. Equiper StorageInMemory de méthodes pour gérer les badges :
 
 ```go
 Connect() error
@@ -26,10 +32,20 @@ DeleteUserBadge(userID uint, badgeName string) error
 Cf. [practical-go-lessons.com/chap-14-methods](https://www.practical-go-lessons.com/chap-14-methods)
 
 
-* Vérifier quelques fonctionnements de base
+## 23. Vérifier quelques fonctionnements de base
 
 Créer un ou plusieurs users avec CreateUser
 Appeler GetUsers et imprimer le résultat obbtenu sur la sortie standard
 
 => vous devriez obtenir les utilisateurs précédemment créés.
+
+## 24. Lancer le test unitaire
+
+```
+go test
+```
+
+<br>
+
+➡️ [Etape 3](../etape_03/README.md)
 

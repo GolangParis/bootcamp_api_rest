@@ -1,5 +1,5 @@
 
-# Etape 00 - Mise en place du module et du programme
+# Etape 0 - Mise en place du module et du programme
 
 ## Objectif
 
@@ -99,4 +99,6 @@ Le nom du binaire est celui du module :
 ```sh
 ./badges
 ```
+
+➡️ [Etape 1](etape_01/README.md)
 

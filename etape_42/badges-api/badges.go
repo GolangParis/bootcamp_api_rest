@@ -7,8 +7,7 @@ import (
 
 
 var (
-	//UsersMap = make(map[string]*User)
-
+	// TODO  map[uint !
 	UsersMap = map[string]*User {
 		"132654" : &User{"132654", []int{1}},
 		"655554" : &User{"655554", []int{2, 3}},

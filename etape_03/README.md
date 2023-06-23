@@ -1,19 +1,27 @@
 
-## Etape 03 - 
+## Etape 3 - 
 
-* Mise en place de l'utilisation de gin
+## Objectif
 
+A la fin de cette étape vous devriez aboutir à 
+
+
+## 30. Mise en place de l'utilisation de gin
+
+```go
 import "github.com/gin-gonic/gin"
-
-* Création d'un routeur Gin basique
-
 ```
+
+## 31. Création d'un routeur Gin basique
+
+```go
 ginRouter := gin.Default()
 ```
 
-* En se basant sur la route existante `/get/users` ajouter ces routes :
 
-```
+## 32. En se basant sur la route existante `GET /users` ajouter ces routes :
+
+```sh
 Méthode  Route                Fonction réponse
 
 GET      /api/badges/:userid  GetUserBadges
@@ -22,12 +30,17 @@ DELETE   /api/badge/:userid   DeleteBadge
 PATCH    /api/badge/:userid   UpdateBadge
 ```
 
-* PostBadge
+## 33. PostBadge
 
-- décoder le corps de la requête
+* décoder le corps de la requête
 
-* DeleteBadge et UpdateBadge
 
-- Décoder le param user ID de l'URL
-- Convertir le userID vers le type int avec strconv.ParseInt
+## 33. DeleteBadge et UpdateBadge
+
+* Décoder le param user ID de l'URL
+* Convertir le userID vers le type int avec strconv.ParseInt
+
+<br>
+
+➡️ [Etape 4](../etape_04/README.md)
 
