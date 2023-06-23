@@ -1,10 +1,9 @@
 
-## Etape 3 - 
+# Etape 3 -
 
 ## Objectif
 
-A la fin de cette étape vous devriez aboutir à 
-
+A la fin de cette étape vous devriez aboutir à
 
 ## 30. Mise en place de l'utilisation de gin
 
@@ -18,29 +17,37 @@ import "github.com/gin-gonic/gin"
 ginRouter := gin.Default()
 ```
 
+## 32. Ajoutez les routes HTTP suivantes a l'API
 
-## 32. En se basant sur la route existante `GET /users` ajouter ces routes :
+Pour l'instant ces routes ne font rien et ne retournent pas d'erreurs
 
-```sh
-Méthode  Route                Fonction réponse
+|Méthode |  Route               | Fonction réponse| Type du corp de la requête (ou réponse pour GET)        |
+| ---    | ---                  | ---             | ---                                                     |
+|GET     | /api/badges/:userid  | GetUserBadges   | JSON contenant 1 badge: `{"name": "go", "URL": "xyz"}`  |
+|POST    | /api/badge/:userid   | PostBadge       | JSON contenant 1 badge: `{"name": "go", "URL": "xyz"}`  |
+|DELETE  | /api/badge/:userid   | DeleteBadge     | JSON avec le nom d'un badge: `{"badgeName": "go"}`      |
+|PATCH   | /api/badge/:userid   | UpdateBadge     | JSON contenant 1 badge: `{"name": "go", "URL": "xyz"}`  |
 
-GET      /api/badges/:userid  GetUserBadges
-POST     /api/badge/:userid   PostBadge
-DELETE   /api/badge/:userid   DeleteBadge
-PATCH    /api/badge/:userid   UpdateBadge
-```
+Déclarez une map de Badges stoquée en mémoire (type `StorageInMemory`) en variable
+globale afin de stoquer le contenue reçue via l'API
 
 ## 33. PostBadge
 
+* Convertir le userID vers le type int avec strconv.ParseInt
 * décoder le corps de la requête
-
+* stoquer le corps de la requête dans la base en mémoire
 
 ## 33. DeleteBadge et UpdateBadge
 
 * Décoder le param user ID de l'URL
 * Convertir le userID vers le type int avec strconv.ParseInt
+* supprimer le badge fournit dans le corp de la requête
+
+## 34. GetBadge
+
+* Décoder le param user ID de l'URL
+* Retourner la liste de gadges ascociés a un user ID.
 
 <br>
 
 ➡️ [Etape 4](../etape_04/README.md)
-
