@@ -22,4 +22,5 @@ func TestAddToSet(t *testing.T) {
 		t.Errorf("Unexpected length, got: %d", len(newbadges))
 	}
 
+	// TODO compare all slice elements
 }
