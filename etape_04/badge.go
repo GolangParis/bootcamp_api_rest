@@ -128,16 +128,19 @@ func (store StorageInMemory) DeleteUserBadge(userID int, badgeName string) error
 
 func GetUserBadges(c *gin.Context) {
 
-	id, err := strconv.ParseInt(c.Params.ByName("userid"), 10, 32)
+	strID := c.Params.ByName("userid")
+	id, err := strconv.ParseInt(strID, 10, 32)
 
 	if err != nil {
-		fmt.Printf("%v\n", err)
+		fmt.Println("failed to parse userID: ", strID)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
 
 	badges, err := BadgesMap.GetUserBadges(int(id))
 	if err != nil {
-		fmt.Printf("%v\n", err)
+		fmt.Println("failed to get badges for userID: ", strID)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
 
