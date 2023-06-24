@@ -14,7 +14,7 @@ Voir : [practical-go-lessons.com/chap-13-types#type-struct-variable-creation](ht
 
 La struct `Badge` devrait contenir :  
 
-* un identifiant nommé `ID` de type `uint`
+* un identifiant nommé `ID` de type `int`
 * un champ nom nommé `Name`
 * un champ url nommé `URL`  
 
@@ -39,7 +39,7 @@ La struct `User` devrait contenir :
 
 * Ajouter un fichier utils.go dans lequel sera ajoutée :
 
-* Une fonction AddToSet prenant en entrée une slice d'identifiant entiers (uint), et un nouvel identifiant,  
+* Une fonction AddToSet prenant en entrée une slice d'identifiant entiers (int), et un nouvel identifiant,  
   et n'ajoutera cet identifiant à la slice seulement si elle ne le contient pas déja.  
   Cette fonction retournera la slice mise à jour.
 
