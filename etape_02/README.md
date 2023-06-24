@@ -39,10 +39,10 @@ nous voudrons les rattacher à un type donné.
 Commençons par définir un type utilisateur basé sur notre map :
 
 ```go
-type StorageInMemory map[int][]int
+type StorageInMemory map[int][]Badge
 ```
 
-La clé de type `int` représente un User ID. La valeur de type `[]int` est une liste de Badge IDs.
+La clé de type `int` représente un User ID. La valeur de type `[]Badge` est une liste de Badges.
 
 Déclarez ensuite une instance de ce type, ajoutez lui des utilisateurs, et affichez les  
 ensuite sur la sortie standard.
@@ -57,11 +57,11 @@ et la suppression de badge va se faire par le biais de ces méthodes  :
 ```go
 Connect() error
 
-CreateUser(user User) (User, error)
+CreateUser(user User) error
 GetUsers() ([]User, error)
 
 GetUserBadges(userID int) ([]Badge, error)
-AddUserBadge(userID int, b Badge) (int, error)
+AddUserBadge(userID int, b Badge) error
 UpdateUserBadge(userID int, b Badge) error
 DeleteUserBadge(userID int, badgeName string) error
 ```
