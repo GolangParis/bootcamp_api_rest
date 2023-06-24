@@ -9,16 +9,11 @@ permettant de gérer les badges associés à des identifiants utilisateurs.
 
 ## 30. Mise en place de l'utilisation de gin
 
-```go
-import "github.com/gin-gonic/gin"
-```
-
 Cf. [github.com/gin-gonic/gin](https://github.com/gin-gonic/gin) 
 
-Puis mettre à jour les dépendances à l'endroit où se trouve le module avec :
-
 ```sh
-go get .
+cd etape_03
+go get github.com/gin-gonic/gin
 ```
 
 &rarr; votre fichier go.mod devrait maintenant mentionner gin-gonic
