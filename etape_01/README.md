@@ -3,9 +3,9 @@
 
 ## Objectif
 
-Cette étape va consister à déclarer 2 types utilisateurs : les type User et Badges.  
+Cette étape va consister à déclarer 2 types utilisateurs : les type User et Badge.  
 A la fin de celle-ci votre programme devrait être en mesure d'afficher des variables  
-de type User et Badges.
+de type User et Badge.
 
 Voir : [practical-go-lessons.com/chap-13-types#type-struct-variable-creation](https://www.practical-go-lessons.com/chap-13-types#type-struct-variable-creation)
 
@@ -14,8 +14,8 @@ Voir : [practical-go-lessons.com/chap-13-types#type-struct-variable-creation](ht
 
 La struct `Badge` devrait contenir :  
 
-* un champs nom nommé `Name`
-* un champs url nommé `URL`  
+* un champ nom nommé `Name`
+* un champ url nommé `URL`  
 
 Tous deux de type `string`
 
