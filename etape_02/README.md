@@ -42,6 +42,8 @@ Commençons par définir un type utilisateur basé sur notre map :
 type StorageInMemory map[int][]int
 ```
 
+La clé de type `int` représente un User ID. La valeur de type `[]int` est une liste de Badge IDs.
+
 Déclarez ensuite une instance de ce type, ajoutez lui des utilisateurs, et affichez les  
 ensuite sur la sortie standard.
 
