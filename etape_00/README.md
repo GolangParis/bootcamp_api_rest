@@ -22,11 +22,11 @@ pour démarrer. Attention, il n'est pas sans surprises.
 ## 01. Initialisation du projet et du module
 
 Le bootcamp démarre dans le répertoire etape_00 où vous allez "initialiser"  
-un nouveau projet, qui revient tout simplement à créer un fichier `go.mod`  
+un nouveau projet, qui revient à créer un fichier `go.mod`  
 pour déclarer un module :
 
 ```sh
-cd badges/etape_00
+cd etape_00
 
 # Initialisez le fichier de module
 
@@ -75,12 +75,12 @@ func Operation() {
 
 Cf. [practical-go-lessons.com/chap-10-functions](https://www.practical-go-lessons.com/chap-10-functions)
 
-Il vous faut simplement ajouter une fonction nommée `main` sans paramètre ni code de retour.
+Il vous faut ajouter une fonction nommée `main` sans paramètre ni code de retour.
 
 
 ## 06. Ajouter un affichage de message sur la sortie standard
 
-Son corps devra contenir simplement :
+Son corps devra contenir :
 
 ```golang
 fmt.Println("I can haz Badges ?")

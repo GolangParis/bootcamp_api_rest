@@ -58,7 +58,7 @@ L'API est simple : elle permet de gérer (créer, modifier, accéder, retirer) d
 
 Le type `User` a pour membres :
 
-* un simple ID entier
+* un ID entier
 
 Le type `Badge` a pour membres : 
 
