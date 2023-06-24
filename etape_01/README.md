@@ -15,7 +15,7 @@ Voir : [practical-go-lessons.com/chap-13-types#type-struct-variable-creation](ht
 La struct `Badge` devrait contenir :  
 
 * un champs nom nommé `Name`
-* un champs url nommé `Url`  
+* un champs url nommé `URL`  
 
 Tous deux de type `string`
 
@@ -24,7 +24,7 @@ Tous deux de type `string`
 La struct `User` devrait contenir :  
 
 * un identifiant nommé `ID` de type `uint`
-* une liste de badges nommée `Badges`
+* une liste (slice) d'identifiants de badges nommée `BadgeIDs`
 
 <br>
 
@@ -34,14 +34,12 @@ La struct `User` devrait contenir :
 
 <br>
 
-TODO : fix gap de progression logique sur la prochaine étape dont l'utilité n'est pas évidente
-
-## 12. Gérer un ensemble de valeurs unique stockées dans une slice
+## 12. Gérer un ensemble de valeurs uniques stockées dans une slice
 
 * Ajouter un fichier utils.go dans lequel sera ajoutée :
 
-* Une fonction AddToSet prenant en entrée une slice de Badges, et un nouveau Badge,  
-  et n'ajoutera ce badge à la slice seulement si elle ne contient pas déja.  
+* Une fonction AddToSet prenant en entrée une slice d'identifiant entiers, et un nouvel identifiant,  
+  et n'ajoutera cet identifiant à la slice seulement si elle ne le contient pas déja.  
   Cette fonction retournera la slice mise à jour.
 
 <br>

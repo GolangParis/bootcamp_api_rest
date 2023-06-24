@@ -1,11 +1,23 @@
 package main
 
-func AddtoSet(badges []Badge, new_badge Badge) []Badge {
-	for _, it := range badges {
-		if it.Name == new_badge.Name {
-			return badges
+func AddToSet(vv []int, val int) []int {
+	for _, v := range vv {
+		if v == val {
+			return vv
 		}
 	}
 
-	return append(badges, new_badge)
+	return append(vv, val)
+}
+
+func RemoveFromSet(vv []int, val int) []int {
+	pos := 0
+	for _, v := range vv {
+		if v == val {
+			return append(vv[:pos], vv[pos:]...)
+		}
+		pos++
+	}
+
+	return vv
 }

@@ -2,12 +2,23 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
+	//"math/rand"
 	"net/http"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
+
+/*
+
+Améliorations souhaitables
+=============================
+
+Remplacer les log à base de fmt.Println par la lib log standard 
+ou une lib de log structurés
+
+
+*/
 
 type User struct {
 	ID     int
@@ -19,117 +30,37 @@ type Badge struct {
 	Url  string
 }
 
-type StorageInMemory map[int][]Badge
 
 var (
-	//UsersMap = make(map[string]*User)
 
-	BadgesMap = StorageInMemory{
-		1: {
-			{
-				Name: "go",
-				Url:  "https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white",
-			},
-			{
-				Name: "steam",
-				Url:  "https://img.shields.io/badge/Steam-000000?style=for-the-badge&logo=steam&logoColor=white",
-			},
-		},
-		2: {
-			{
-				Name: "vue",
-				Url:  "https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vue.js&logoColor=4FC08D",
-			},
-		},
-		3: {},
+	BadgesMap = map[int]*Badge {
+		1 : &Badge{"go",    "https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white"},
+		2 : &Badge{"steam", "https://img.shields.io/badge/Steam-000000?style=for-the-badge&logo=steam&logoColor=white"},
+		3 : &Badge{"vue",   "https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vue.js&logoColor=4FC08D"},
+		4 : &Badge{"docker","https://img.shields.io/badge/Docker-00005E?style=for-the-badge&logo=docker&logoColor=4FC08D"},
+	}
+
+	UserBadges = StorageInMemory{
+		1: []int{ 1, 2 },
+		2: []int{ 2, 3 },
+		3: []int{ 4},
 	}
 )
 
-func (store *StorageInMemory) Connect() error {
-	return nil
-}
+func GetBadgeIDFromName(name string) (int, error) {
 
-func (store StorageInMemory) CreateUser(user User) (User, error) {
-	user.ID = rand.Int()
-	store[user.ID] = user.Badges
-
-	return user, nil
-}
-
-func (store StorageInMemory) GetUsers() ([]User, error) {
-	users := make([]User, 0)
-
-	for uid, badges := range store {
-		users = append(users, User{ID: uid, Badges: badges})
-	}
-
-	return users, nil
-}
-
-func (store StorageInMemory) GetUserBadges(userID int) ([]Badge, error) {
-	badges, ok := store[userID]
-
-	if !ok {
-		return nil, fmt.Errorf("userId: %d does not exists", userID)
-	}
-
-	return badges, nil
-}
-
-func (store StorageInMemory) AddUserBadge(userID int, badge Badge) error {
-	// check if user exists
-	badges, err := store.GetUserBadges(userID)
-
-	if err != nil {
-		return err
-	}
-
-	store[userID] = AddtoSet(badges, badge)
-
-	return nil
-}
-
-func (store StorageInMemory) UpdteUserBadge(userID int, badge Badge) error {
-	// check if user exists
-	badges, err := store.GetUserBadges(userID)
-
-	if err != nil {
-		return err
-	}
-
-	for i := range badges {
-		if badges[i].Name == badge.Name {
-			badges[i] = badge
-			return nil
+	for id, b := range BadgesMap {
+		if b.Name == name {
+			return id, nil
 		}
 	}
-
-	return fmt.Errorf("Badge Name=%s does not exists cannot update", badge.Name)
-}
-
-func (store StorageInMemory) DeleteUserBadge(userID int, badgeName string) error {
-	badges, err := store.GetUserBadges(userID)
-
-	if err != nil {
-		return err
-	}
-
-	for i := range badges {
-		if badges[i].Name == badgeName {
-			badges = append(badges[:i], badges[i+1:]...)
-			store[userID] = badges
-
-			return nil
-		}
-	}
-
-	return fmt.Errorf("Badge Name=%s does not exists cannot update", badgeName)
+	return 0, fmt.Errorf("unknown badge name")
 }
 
 func GetUserBadges(c *gin.Context) {
 
 	strID := c.Params.ByName("userid")
-	id, err := strconv.ParseInt(strID, 10, 32)
+	vInt64, err := strconv.ParseInt(strID, 10, 32)
 
 	if err != nil {
 		fmt.Println("failed to parse userID: ", strID)
@@ -137,19 +68,136 @@ func GetUserBadges(c *gin.Context) {
 		return
 	}
 
-	badges, err := BadgesMap.GetUserBadges(int(id))
-	if err != nil {
-		fmt.Println("failed to get badges for userID: ", strID)
-		c.JSON(http.StatusBadRequest, gin.H{"error": err})
+	userID := int(vInt64)
+
+	badges, ok := UserBadges[userID]
+	if !ok {
+		err := fmt.Errorf("Unknown userID: ", userID)
+		c.JSON(http.StatusNotFound, gin.H{"error": err})
 		return
 	}
 
 	c.JSON(http.StatusOK, badges)
 }
 
+// PostBadge ajoute un badge à un utilisateur dont l'ID est userID
+func PostBadge(c *gin.Context) {
+	userIDAsStr := c.Param("userid")
+
+	valInt64, err := strconv.ParseInt(userIDAsStr, 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err})
+		return
+	}
+
+	userID := int(valInt64)
+
+	// Amélioration : dans le cas présent, on inspecte Userser.BadgeIDs
+	// mais idéalement on devrait avoir un stockage utilisateurs distinct.
+	userBadgeIDs, ok := UserBadges[userID]
+	if !ok {
+		c.JSON(404, gin.H{"error": fmt.Errorf("Unknown user: %v", userID)})
+		return
+	}
+	
+	var badge Badge
+
+	if err := c.ShouldBindJSON(&badge); err != nil {
+		c.JSON(500, gin.H{
+			"status": "error",
+			"reason": err.Error(),
+		})
+		return
+	}
+
+	fmt.Printf("Post badge : %v\n", badge)
+
+	badgeID, err := GetBadgeIDFromName(badge.Name)
+	if err != nil {
+		c.JSON(404, gin.H{"error": err})
+		return
+	}
+
+	userBadgeIDs = AddToSet(userBadgeIDs, badgeID)
+
+	UserBadges[userID] = userBadgeIDs
+
+	fmt.Println("User badges:", userBadgeIDs)
+
+	c.JSON(200, gin.H{"status": "ok"})
+}
+
+
+func UpdateBadge(c *gin.Context) {
+	userID := c.Param("userid")
+	fmt.Println("userID", userID)
+
+	var badge Badge
+
+	if err := c.ShouldBindJSON(&badge); err != nil {
+		c.JSON(500, gin.H{
+			"status": "error",
+			"reason": err.Error(),
+		})
+		return
+	}
+
+	fmt.Printf("Update badge : %v\n", badge)
+
+	c.JSON(200, gin.H{"status": "ok"})
+}
+
+
+func DeleteBadge(c *gin.Context) {
+	userIDAsStr := c.Param("userid")
+
+	vInt64, err := strconv.ParseInt(userIDAsStr, 10, 64)
+
+	if err != nil {
+		fmt.Println("failed to parse userID: ", userIDAsStr)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err})
+		return
+	}
+
+	userID := int(vInt64)
+
+	_, ok := UserBadges[userID]
+	if !ok {
+		c.JSON(404, gin.H{"error": fmt.Errorf("Unknown user: %v", userID)})
+		return
+	}
+
+	fmt.Println("userID", userID)
+
+	var badge Badge
+	
+	if err := c.ShouldBindJSON(&badge); err != nil {
+		c.JSON(500, gin.H{
+			"status": "error",
+			"reason": err.Error(),
+		})
+		return
+	}
+
+	fmt.Printf("Delete badge : %v\n", badge)
+
+	// TODO remove badge ID
+
+	c.JSON(200, gin.H{"status": "ok"})
+}
+
+
 func main() {
+	vv := []int{ 1, 2}
+	bb := RemoveFromSet(vv, 2)
+	fmt.Println("bb: ", bb)
+
 	ginRouter := gin.Default()
 
 	ginRouter.GET("/api/badges/:userid", GetUserBadges)
+	ginRouter.POST("/api/badge/:userid", PostBadge)
+	ginRouter.PATCH("/api/badge/:userid", UpdateBadge)
+	ginRouter.DELETE("/api/badge/:userid", DeleteBadge)
+
 	ginRouter.Run(":8090")
 }
