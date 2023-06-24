@@ -58,10 +58,10 @@ Connect() error
 CreateUser(user User) (User, error)
 GetUsers() ([]User, error)
 
-GetUserBadges(userID uint) ([]Badge, error)
-AddUserBadge(userID uint, b Badge) (uint, error)
-UpdateUserBadge(userID uint, b Badge) error
-DeleteUserBadge(userID uint, badgeName string) error
+GetUserBadges(userID int) ([]Badge, error)
+AddUserBadge(userID int, b Badge) (int, error)
+UpdateUserBadge(userID int, b Badge) error
+DeleteUserBadge(userID int, badgeName string) error
 ```
 
 Equipez le type StorageInMemory de ces méthodes et implémentez les.

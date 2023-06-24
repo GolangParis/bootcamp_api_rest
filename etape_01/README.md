@@ -24,7 +24,7 @@ Tous deux de type `string`
 
 La struct `User` devrait contenir :  
 
-* un identifiant nommé `ID` de type `uint`
+* un identifiant nommé `ID` de type `int`
 * une liste (slice) d'identifiants de badges nommée `BadgeIDs`
 
 <br>

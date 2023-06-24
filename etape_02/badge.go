@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 type User struct {
-	Id     uint
+	Id     int
 	Badges []Badge
 }
 
